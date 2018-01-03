@@ -125,7 +125,7 @@ function generujDniKonferencji() {
                     break;
                 }
             }
-            if (miejsce === -1) console.log("NIE UDAŁO SIĘ ZNALEŹĆ MIEJSCA!") //TODO: auto re generacja przez przesyłanie flag 
+            if (miejsce === -1) console.log("NIE UDAŁO SIĘ ZNALEŹĆ MIEJSCA NA KONFERENCJĘ!") //TODO: auto re generacja przez przesyłanie flag 
             dzienKonferencji.miejsce = miejsce;
             dzienKonferencji.data = data;
             dzienKonferencji.godzinaRozpoczecia = godzina(losowaLiczba(7, 10));
@@ -133,16 +133,87 @@ function generujDniKonferencji() {
             dniKonferencji.push(dzienKonferencji);
         }
     });
-}
+};
+
+function generujWarsztaty() {
+    var id = 0;
+    dane.warsztaty.forEach(element => {
+        id++;
+        var warsztat = {};
+        warsztat.id = id;
+        warsztat.nazwa = element.nazwa;
+        warsztat.sugerowanaCena = element.sugerowanaCena;
+        warsztat.opis = element.opisWarsztatu;
+        warsztaty.push(warsztat);
+    });
+};
+
+function generujInstancjeWarsztatow() {
+    var id = 0;
+    dniKonferencji.forEach(element => {
+        for (var i=0; i<losowaLiczba(0,3); i++) {
+            id++;
+            var instancjaWarsztatu = {};
+            instancjaWarsztatu.id = id;
+            var wylosowanyWarsztat = losowyElTab(warsztaty);
+            instancjaWarsztatu.idWarsztatu = wylosowanyWarsztat.id;
+            instancjaWarsztatu.idDniaKonferencji = element.id;
+            instancjaWarsztatu.cena = wylosowanyWarsztat.sugerowanaCena + losowaLiczba (-20, 20);
+            if (instancjaWarsztatu.cena < 0) instancjaWarsztatu.cena = 0;
+            var liczbaMiejsc = losowaLiczba (5, 12) * 10;
+            instancjaWarsztatu.liczbaMiejsc = liczbaMiejsc;
+            
+            instancjaWarsztatu.data = element.data;
+
+            var godzinaRozpoczeciaKonferencji = element.godzinaRozpoczecia;
+            godzinaRozpoczeciaKonferencji = Number(godzinaRozpoczeciaKonferencji.slice(0,2));
+            var godzinaZakonczeniaKonferencji = element.godzinaZakonczenia;
+            godzinaZakonczeniaKonferencji = Number(godzinaZakonczeniaKonferencji.slice(0,2));
+
+            var godzinaRozpoczeciaWarsztatu = losowaLiczba(godzinaRozpoczeciaKonferencji, godzinaZakonczeniaKonferencji-2);
+            var godzinaZakonczeniaWarsztatu = losowaLiczba(godzinaRozpoczeciaWarsztatu+1, godzinaZakonczeniaKonferencji);
+            instancjaWarsztatu.godzinaRozpoczecia = godzina(godzinaRozpoczeciaWarsztatu);
+            instancjaWarsztatu.godzinaZakonczenia = godzina(godzinaZakonczeniaWarsztatu);
+            instancjaWarsztatu.czyAnulowane = losowaLiczba(0, 100) < 4 ? 1 : 0;
+            //id miejsca
+            var miejsce = -1;
+            for (var j=0; j<miejsca.length; j++) {
+                if (miejsca[j].iloscMiejsc < liczbaMiejsc) continue;
+                var czyZajete = false;
+                instancjeWarsztatow.forEach(inneWarsztaty => {
+                    if (inneWarsztaty.data == element.data && inneWarsztaty.miejsce == miejsca[j].id &&
+                        !((godzinaRozpoczeciaWarsztatu <= inneWarsztaty.godzinaRozpoczeciaWarsztatu &&
+                            godzinaZakonczeniaWarsztatu <= inneWarsztaty.godzinaRozpoczeciaWarsztatu ) ||
+                        (godzinaRozpoczeciaWarsztatu >= inneWarsztaty.godzinaZakonczeniaWarsztatu &&
+                            godzinaZakonczeniaWarsztatu >= inneWarsztaty.godzinaZakonczeniaWarsztatu))) czyZajete = true;
+                });
+                dniKonferencji.forEach(dzienKonf => {
+                    if (dzienKonf.data == element.data && dzienKonf.miejsce == miejsca[j].id) czyZajete = true;
+                });
+                if (!czyZajete) {
+                    miejsce = miejsca[j].id;
+                    break;
+                }
+            }
+            if (miejsce === -1) console.log("NIE UDAŁO SIĘ ZNALEŹĆ MIEJSCA NA WARSZTATY!") //TODO: auto re generacja przez przesyłanie flag 
+            instancjaWarsztatu.miejsce = miejsce;
+            instancjeWarsztatow.push(instancjaWarsztatu);
+        }
+    });
+};
 
 kraje = [];
 miejsca = [];
 konferencje = [];
 znizki = [];
 dniKonferencji = [];
+warsztaty = [];
+instancjeWarsztatow = [];
 generujKraje();
 generujMiejsca();
 generujKonferencje();
 generujZnizki();
 generujDniKonferencji();
-console.log(dniKonferencji);
+generujWarsztaty();
+generujInstancjeWarsztatow();
+console.log(instancjeWarsztatow);
