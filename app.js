@@ -837,7 +837,86 @@ function tworzenieKwerendKraje() {
     kraje.forEach(kraj => {
         kwerendy += stworzKrotke("Kraje", [kraj.id, kraj.nazwa, kraj.symbol]);
     });
-    //return kwerendy;
+}
+function tworzenieKwerendMiejsca() {
+    miejsca.forEach(miejsce => {
+        kwerendy += stworzKrotke("Miejsca", [miejsce.id, miejsce.idKraju, miejsce.miasto, miejsce.kodPocztowy, miejsce.ulica, miejsce.numerLokalu, miejsce.iloscMiejsc, miejsce.dodatkoweInformacje]);
+    });
+}
+function tworzenieKwerendKonferencje() {
+    konferencje.forEach(konferencja => {
+        kwerendy += stworzKrotke("Konferencje", [konferencja.id, konferencja.nazwa, konferencja.dataRozpoczecia, konferencja.dataZakonczenia, konferencja.liczbaMiejsc, konferencja.cena, konferencja.znizkaStudencka, konferencja.czyAnulowane]);
+    });
+}
+function tworzenieKwerendZnizki() {
+    znizki.forEach(znizka => {
+        kwerendy += stworzKrotke("Znizki", [znizka.id, znizka.idKonferencji, znizka.znizka, znizka.doKiedy]);
+    });
+}
+function tworzenieKwerendDniKonferencji() {
+    dniKonferencji.forEach(dzien => {
+        kwerendy += stworzKrotke("Dni_konferencji", [dzien.id, dzien.idKonferencji, dzien.miejsce, dzien.data, dzien.godzinaRozpoczecia, dzien.godzinaZakonczenia]);
+    });
+}
+function tworzenieKwerendWarsztaty() {
+    warsztaty.forEach(warsztat => {
+        kwerendy += stworzKrotke("Warsztaty", [warsztat.id, warsztat.nazwa, warsztat.sugerowanaCena, warsztat.opis]);
+    });
+}
+function tworzenieKwerendInstancjeWarsztatow() {
+    instancjeWarsztatow.forEach(instancja => {
+        kwerendy += stworzKrotke("Instancje_warsztatow", [instancja.id, instancja.idWarsztatu, instancja.idDniaKonferencji, instancja.miejsce, instancja.cena, instancja.liczbaMiejsc, instancja.godzinaRozpoczecia, instancja.godzinaZakonczenia, instancja.czyAnulowane]);
+    });
+}
+function tworzenieKwerendKlienci() {
+    klienci.forEach(klient => {
+        kwerendy += stworzKrotke("Klienci", [klient.id, klient.login, klient.haslo, klient.email]);
+    });
+}
+function tworzenieKwerendFirmy() {
+    firmy.forEach(firma => {
+        kwerendy += stworzKrotke("Firmy", [firma.id, firma.idKraju, firma.nazwa, firma.nip]);
+    });
+}
+function tworzenieKwerendKlienciFirmowi() {
+    klienciFirmowi.forEach(klient => {
+        kwerendy += stworzKrotke("Klienci_Firmowi", [klient.id, klient.idKlienta, klient.idFirmy, klient.imiePrzedstawiciela, klient.nazwiskoPrzedstawiciela, klient.telefon]);
+    });
+}
+function tworzenieKwerendUczestnicy() {
+    uczestnicy.forEach(uczestnik => {
+        kwerendy += stworzKrotke("Uczestnicy", [uczestnik.id, uczestnik.idKlienta, uczestnik.imie, uczestnik.nazwisko, uczestnik.telefon, uczestnik.email]);
+    });
+}
+function tworzenieKwerendStudenci() {
+    studenci.forEach(student => {
+        kwerendy += stworzKrotke("Studenci", [student.id, student.idUczestnika, student.numerLegitymacji]);
+    });
+}
+function tworzenieKwerendRezerwacje() {
+    rezerwacje.forEach(rezerwacja => {
+        kwerendy += stworzKrotke("Rezerwacje", [rezerwacja.id, rezerwacja.idKlienta, rezerwacja.dataRezerwacji, rezerwacja.dataWplaty]);
+    });
+}
+function tworzenieKwerendRezerwacjeKonferencji() {
+    rezerwacjeKonferencji.forEach(rezerwacja => {
+        kwerendy += stworzKrotke("Rezerwacje_konferencji", [rezerwacja.id, rezerwacja.idRezerwacji, rezerwacja.idDniaKonferencji, rezerwacja.liczbaMiejsc, rezerwacja.liczbaStudentow]);
+    });
+}
+function tworzenieKwerendRezerwacjeWarsztatow() {
+    rezerwacjeWarsztatow.forEach(rezerwacja => {
+        kwerendy += stworzKrotke("Rezerwacje_warsztatow", [rezerwacja.id, rezerwacja.idRezerwacjiKonferencji, rezerwacja.idInstancjiWarsztatu, rezerwacja.liczbaMiejsc]);
+    });
+}
+function tworzenieKwerendRejestracjeKonferencji() {
+    rejestracjeKonferencji.forEach(rejestracja => {
+        kwerendy += stworzKrotke("Rejestracje_konferencji", [rejestracja.id, rejestracja.idRezerwacjiKonferencji, rejestracja.idUczestnika]);
+    });
+}
+function tworzenieKwerendRejestracjeWarsztatow() {
+    rejestracjeWarsztatow.forEach(rejestracja => {
+        kwerendy += stworzKrotke("Rejestracje_warsztatow", [rejestracja.id, rejestracja.idRezerwacjiWarsztatu, rejestracja.idUczestnika]);
+    });
 }
 
 //=====================
@@ -883,8 +962,26 @@ generujRejestracjeKonferencji();
 generujRejestracjeWarsztatow();
 
 tworzenieKwerendKraje();
+tworzenieKwerendMiejsca();
+tworzenieKwerendKonferencje();
+tworzenieKwerendZnizki();
+tworzenieKwerendDniKonferencji();
+tworzenieKwerendWarsztaty(); //lamanie lin do poprawy
+tworzenieKwerendInstancjeWarsztatow();
+tworzenieKwerendKlienci();
+tworzenieKwerendFirmy();
+tworzenieKwerendKlienciFirmowi();
+tworzenieKwerendUczestnicy();
+tworzenieKwerendStudenci();
+tworzenieKwerendRezerwacje();
+tworzenieKwerendRezerwacjeKonferencji();
+tworzenieKwerendRezerwacjeWarsztatow();
+tworzenieKwerendRejestracjeKonferencji();
+tworzenieKwerendRejestracjeWarsztatow();
 
 //console.log("=====================================================");
 //console.log(rejestracjeKonferencji); 
 //console.log("=====================================================");
-console.log(kwerendy);
+//console.log(kwerendy);
+
+fs.writeFile("dane-z-generatora.txt", kwerendy);
