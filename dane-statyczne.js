@@ -256,109 +256,63 @@ const dodatkoweInformacjeAdresowe = [
 const warsztaty = [
     {   nazwa: "JS Upskill #11",
         sugerowanaCena: 100,
-        opisWarsztatu: `Web Componenty to zestaw technologii, 
-        które powoli, ale pewnie wkraczają do przeglądarek i zapowiadają rewolucję w sposobie w jaki 
-        tworzymy i konsumujemy frontendowy kod. Trend ten zapoczątkował React, kładąc nacisk na 
-        dekompozycję aplikacji na zestaw mniejszych elementów. Dzięki web componentom takie podejście 
-        można zastosować w dowolnej aplikacji. Nie jesteśmy wtedy uwiązani do jednej biblioteki, 
-        zyskując masę gotowych elementów gotowych do użycia.`
+        opisWarsztatu: 'Web Componenty to zestaw technologii, które powoli, ale pewnie wkraczają do przeglądarek i zapowiadają rewolucję w sposobie w jaki tworzymy i konsumujemy frontendowy kod. Trend ten zapoczątkował React, kładąc nacisk na dekompozycję aplikacji na zestaw mniejszych elementów. Dzięki web componentom takie podejście można zastosować w dowolnej aplikacji. Nie jesteśmy wtedy uwiązani do jednej biblioteki, zyskując masę gotowych elementów gotowych do użycia.'
     },
     {   nazwa: "PHPers Workshop",
         sugerowanaCena: 0,
-        opisWarsztatu: `W ciągu 8 godzinnego kursu stworzymy prostą aplikacje księgową przy użyciu wzorców związanych z 
-        architekturą portów i adapterów zintegrujemy ją z dwoma przykładowymi framworkami (Symfony 4 oraz Zend Expressive). 
-        W czasie kursu będziemy używać php 7.1, dockera, composera, phpunita oraz phpspec więc podstawowa znajomość tych 
-        narzędzi na pewno się przyda.`
+        opisWarsztatu: 'W ciągu 8 godzinnego kursu stworzymy prostą aplikacje księgową przy użyciu wzorców związanych z architekturą portów i adapterów zintegrujemy ją z dwoma przykładowymi framworkami (Symfony 4 oraz Zend Expressive). W czasie kursu będziemy używać php 7.1, dockera, composera, phpunita oraz phpspec więc podstawowa znajomość tych narzędzi na pewno się przyda.'
     },
     {   nazwa: "Warsztaty ROBOproject dla dzieci",
         sugerowanaCena: 60,
-        opisWarsztatu: `Tym razem na #14 spotkanie BydgoszczJUG zapraszamy razem z dziećmi. 
-        Gdy my będziemy zgłębiać tajniki programowania funkcyjnego i wykorzystania eventów, 
-        w holu za ścianą dzieci będą budować roboty i programować je ucząc się podstaw robotyki. 
-        Zajęcia zorganizowane będą w dwóch grupach wiekowych 6-9 lat i 10-12 lat. 
-        Prosimy o zapisanie się na meetup dotyczący odpowiedniej grupy wiekowej. 
-        Jeżeli przyjdziecie z jednym dzieckiem zapisujecie na TEN meetup tylko siebie. 
-        Jeżeli przyjdziecie z dwójką dzieci zapisujecie siebie i jedną osobę towarzyszącą itd. 
-        Ten meetup dotyczy grupy wiekowej 6-9 lat. Dzieci będą miały zapewnioną opiekę wykwalifikowanej kadry ROBOproject.`
+        opisWarsztatu: 'Tym razem na #14 spotkanie BydgoszczJUG zapraszamy razem z dziećmi. Gdy my będziemy zgłębiać tajniki programowania funkcyjnego i wykorzystania eventów, w holu za ścianą dzieci będą budować roboty i programować je ucząc się podstaw robotyki. Zajęcia zorganizowane będą w dwóch grupach wiekowych 6-9 lat i 10-12 lat. Prosimy o zapisanie się na meetup dotyczący odpowiedniej grupy wiekowej. Jeżeli przyjdziecie z jednym dzieckiem zapisujecie na TEN meetup tylko siebie. Jeżeli przyjdziecie z dwójką dzieci zapisujecie siebie i jedną osobę towarzyszącą itd. Ten meetup dotyczy grupy wiekowej 6-9 lat. Dzieci będą miały zapewnioną opiekę wykwalifikowanej kadry ROBOproject.'
     },
     {   nazwa: "DrupalDay",
         sugerowanaCena: 180,
-        opisWarsztatu: `DrupalDay to jeden dzień bezpłatnych szkoleń dla osób, które chcą poznać system Drupal 8. 
-        Szkolenia odbywają się w różnych miastach w Polsce. Jest to kontynuacja akcji "Drupal idzie na studia".`
+        opisWarsztatu: 'DrupalDay to jeden dzień bezpłatnych szkoleń dla osób, które chcą poznać system Drupal 8. Szkolenia odbywają się w różnych miastach w Polsce. Jest to kontynuacja akcji "Drupal idzie na studia".'
     },
     {   nazwa: "Machine Learning from the scratch - workshop",
         sugerowanaCena: 140,
-        opisWarsztatu: `The goal of this one-day workshop is gaining intuitive understanding of machine learning methods, 
-        especially deep learning. After covering the necessary theoretical minimum, we’ll be focused on practical tasks 
-        from image processing, NLP and personalized recommender systems. All the work will be done in Python with TensorFlow 
-        framework. Bring your laptop! No need to worry about it’s performance: all the calculations will be done in the cloud.
-        `
+        opisWarsztatu: 'The goal of this one-day workshop is gaining intuitive understanding of machine learning methods, especially deep learning. After covering the necessary theoretical minimum, we’ll be focused on practical tasks from image processing, NLP and personalized recommender systems. All the work will be done in Python with TensorFlow framework. Bring your laptop! No need to worry about it’s performance: all the calculations will be done in the cloud.'
     },
     {   nazwa: "PBW: Business Injection",
         sugerowanaCena: 160,
-        opisWarsztatu: `Nasz cel jest taki, by dać okazję młodzieży do przećwiczenia i nauki w praktyce 
-        przygotowania i zaplanowania projektu w ograniczonym czasie w różnych warunkach pracy. 
-        Warsztaty Business Injection trwają 3 dni - 27, 28 i 29 stycznia 2018 r. Na samym początku dostaniesz 
-        listę kilku problemów życia codziennego. Twoim zadaniem będzie przygotować w ok. 5-osobowej drużynie projekt, 
-        który ma rozwiązać dany problem. Wspólnie z innymi uczestnikami będziesz musiał stworzyć do niego konkretny cel, 
-        przedstawić jego mocne oraz słabe strony i strategię rozwoju.`
+        opisWarsztatu: 'Nasz cel jest taki, by dać okazję młodzieży do przećwiczenia i nauki w praktyce przygotowania i zaplanowania projektu w ograniczonym czasie w różnych warunkach pracy. Warsztaty Business Injection trwają 3 dni - 27, 28 i 29 stycznia 2018 r. Na samym początku dostaniesz listę kilku problemów życia codziennego. Twoim zadaniem będzie przygotować w ok. 5-osobowej drużynie projekt, który ma rozwiązać dany problem. Wspólnie z innymi uczestnikami będziesz musiał stworzyć do niego konkretny cel, przedstawić jego mocne oraz słabe strony i strategię rozwoju.'
     },
     {   nazwa: "Code Carrots SQL",
         sugerowanaCena: 120,
-        opisWarsztatu: `Warsztat przeznaczony jest dla osób z podstawami SQL’a (potrafisz napisać prostego SELECT’a, 
-            łączenie tabel nie jest Ci obce) chcących nauczyć się czegoś więcej. Będzie to spotkanie, na którym skupimy 
-            się głównie na umiejętnościach praktycznych.`
+        opisWarsztatu: 'Warsztat przeznaczony jest dla osób z podstawami SQL’a (potrafisz napisać prostego SELECT’a, łączenie tabel nie jest Ci obce) chcących nauczyć się czegoś więcej. Będzie to spotkanie, na którym skupimy się głównie na umiejętnościach praktycznych.'
     },
     {   nazwa: "Political Writing",
         sugerowanaCena: 80,
-        opisWarsztatu: `The American Politics Workshop provides a forum for graduate students and faculty 
-        in American politics to discuss the main themes of research in the field today.  
-        The meetings are broken down by substantive topic areas and include:  discussion of published work, 
-        working papers, faculty and student presentations, and guest speakers.`
+        opisWarsztatu: 'The American Politics Workshop provides a forum for graduate students and faculty in American politics to discuss the main themes of research in the field today.  The meetings are broken down by substantive topic areas and include:  discussion of published work, working papers, faculty and student presentations, and guest speakers.'
     },
     {   nazwa: "Comparative Politics Workshop",
         sugerowanaCena: 40,
-        opisWarsztatu: `The Comparative Politics Workshop provides an opportunity for graduate students 
-        and faculty engaged in comparative and historical research to present work "in progress" to an audience 
-        that is neither specialized in area or era. Thus, the purpose of the workshop is to draw out themes from 
-        papers that are based on specialized historical and comparative research that transcend the period and 
-        region covered.`
+        opisWarsztatu: 'The Comparative Politics Workshop provides an opportunity for graduate students and faculty engaged in comparative and historical research to present work "in progress" to an audience that is neither specialized in area or era. Thus, the purpose of the workshop is to draw out themes from papers that are based on specialized historical and comparative research that transcend the period and region covered.'
     },
     {   nazwa: "Political Methodology Workshop",
         sugerowanaCena: 50,
-        opisWarsztatu: `The Political Methodology Workshop provides a forum for the discussion of theoretical 
-        aspects and empirical applications of statistical modeling in the social sciences. The workshop is 
-        designed to have both pedagogical sessions and more specialized presentations from invited speakers. 
-        Join the Political Methodology Workshop mailing list.`
+        opisWarsztatu: 'The Political Methodology Workshop provides a forum for the discussion of theoretical aspects and empirical applications of statistical modeling in the social sciences. The workshop is designed to have both pedagogical sessions and more specialized presentations from invited speakers. Join the Political Methodology Workshop mailing list.'
     },
     {   nazwa: "Group Decision Making",
         sugerowanaCena: 50,
-        opisWarsztatu: `As pioneers of decision science, Kepner-Tregoe has been helping executives, 
-        business leaders, and workers at all levels make difficult decisions for nearly 60 years. This unique, 
-        one-day workshop brings that wealth of experience to the classroom so you can learn to avoid decision 
-        making biases, practice new skills, and make an immediate impact back on the job.`
+        opisWarsztatu: 'As pioneers of decision science, Kepner-Tregoe has been helping executives, business leaders, and workers at all levels make difficult decisions for nearly 60 years. This unique, one-day workshop brings that wealth of experience to the classroom so you can learn to avoid decision making biases, practice new skills, and make an immediate impact back on the job.'
     },
     {   nazwa: "Organizing Rallies and Marches",
         sugerowanaCena: 20,
-        opisWarsztatu: `Protests are an integral and necessary part of our social movements. 
-        They are the means to assert power, to take power, to pressure a target and to do get what our 
-        communities need. Doing them right is easy, and powerful.`
+        opisWarsztatu: 'Protests are an integral and necessary part of our social movements. They are the means to assert power, to take power, to pressure a target and to do get what our communities need. Doing them right is easy, and powerful.'
     },
     {   nazwa: "Introduction to Media for Campaigns",
         sugerowanaCena: 200,
-        opisWarsztatu: `Moving well beyond social media 101, you’ll learn critical aspects of the major 
-        social media networks and how to use each to drive business, dominate your market, and stand out in the newsfeed.`
+        opisWarsztatu: 'Moving well beyond social media 101, you’ll learn critical aspects of the major social media networks and how to use each to drive business, dominate your market, and stand out in the newsfeed.'
     },
     {   nazwa: "How to Host a Workshop",
         sugerowanaCena: 0,
-        opisWarsztatu: `Hosting an educational workshop is an excellent way to raise your profile as an expert 
-        in a health and fitness specialty while providing a great additional revenue stream for your business.`
+        opisWarsztatu: 'Hosting an educational workshop is an excellent way to raise your profile as an expert in a health and fitness specialty while providing a great additional revenue stream for your business.'
     },
     {   nazwa: "Advanced Media Skills",
         sugerowanaCena: 50,
-        opisWarsztatu: `Increasingly it is not only PR and communications experts who are required to speak with 
-        the media but also employees in a wide variety of technical and specialist roles. Media exposure can provide 
-        excellent opportunities to publicise your organisation and portray your work in a positive light.`
+        opisWarsztatu: 'Increasingly it is not only PR and communications experts who are required to speak with the media but also employees in a wide variety of technical and specialist roles. Media exposure can provide excellent opportunities to publicise your organisation and portray your work in a positive light.'
     },
 ];
 
@@ -408,10 +362,6 @@ const nazwyFirm = [
     "New World Realty",
     "Newhair"
 ];
-/* const nazwyFirm = [
-    "Acuserv",
-    "ZZZ",
-]; */
 
 const imionaZenskie = [
     "Anna",

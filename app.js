@@ -5,35 +5,32 @@ var randomstring = require("randomstring");
 function losowaLiczba (min, max) {
     return Math.floor(Math.random() * (max+1 - min) + min);
 }
-
 function losowyElTab (tab) {
     return element = tab[Math.floor(Math.random() * tab.length)];
 }
-
+function czyLiczba (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
 function dataZZerem (liczba) {
     if (liczba >= 10) return liczba;
     return "0" + liczba;
 }
-
 function godzina (x) {
     if (x < 10) x = "0" + x;
     return x + ":00:00";  
 }
-
 function generujLogin() {
     return randomstring.generate({
         length: losowaLiczba(5,12),
         charset: 'alphanumeric'
       });
 }
-
 function generujHaslo() {
     return randomstring.generate({
         length: losowaLiczba(40,60),
         charset: 'alphanumeric'
       });
 }
-
 function generujImieINazwisko() {
     var imie, nazwisko;
     if (losowaLiczba(0, 10) > 5) {
@@ -49,7 +46,6 @@ function generujImieINazwisko() {
     }
     return {imie: imie, nazwisko: nazwisko};
 }
-
 function generujKraje() {
     var id = 0;
     dane.kraje.forEach(element => {
@@ -61,7 +57,6 @@ function generujKraje() {
         kraje.push(kraj);
     });
 };
-
 function generujMiejsca() {
     const ileMiejsc = 10;
     var idPolski;
@@ -83,7 +78,6 @@ function generujMiejsca() {
         miejsca.push(miejsce);
     }
 };
-
 function generujKonferencje() {
     const ileKonferencji = 10;
     for (var i=0; i<ileKonferencji; i++) {
@@ -109,7 +103,6 @@ function generujKonferencje() {
         konferencje.push(konferencja);
     }
 };
-
 function generujZnizki() {
     var id = 0;
     konferencje.forEach(element => {
@@ -132,7 +125,6 @@ function generujZnizki() {
 
     });
 };
-
 function generujDniKonferencji() {
     var id = 0;
     konferencje.forEach(element => {
@@ -156,7 +148,7 @@ function generujDniKonferencji() {
                     break;
                 }
             }
-            if (miejsce === -1) console.log("NIE UDAŁO SIĘ ZNALEŹĆ MIEJSCA NA KONFERENCJĘ!") //TODO: auto re generacja przez przesyłanie flag 
+            if (miejsce === -1) daneOk = false; //nie udało się znaleźć miejsca na konferencję
             dzienKonferencji.miejsce = miejsce;
             dzienKonferencji.data = data;
             dzienKonferencji.godzinaRozpoczecia = godzina(losowaLiczba(7, 10));
@@ -166,7 +158,6 @@ function generujDniKonferencji() {
         }
     });
 };
-
 function generujWarsztaty() {
     var id = 0;
     dane.warsztaty.forEach(element => {
@@ -179,7 +170,6 @@ function generujWarsztaty() {
         warsztaty.push(warsztat);
     });
 };
-
 function generujInstancjeWarsztatow() {
     var id = 0;
     dniKonferencji.forEach(element => {
@@ -227,13 +217,12 @@ function generujInstancjeWarsztatow() {
                     break;
                 }
             }
-            if (miejsce === -1) console.log("NIE UDAŁO SIĘ ZNALEŹĆ MIEJSCA NA WARSZTATY!") //TODO: auto re generacja przez przesyłanie flag 
+            if (miejsce === -1) daneOk = false; //nie udało się znaleźć miejsca na warsztaty
             instancjaWarsztatu.miejsce = miejsce;
             instancjeWarsztatow.push(instancjaWarsztatu);
         }
     });
 };
-
 function generujFirmy() {
     for (var i=0; i<dane.nazwyFirm.length; i++) {
         var firma = {};
@@ -244,9 +233,8 @@ function generujFirmy() {
         firmy.push(firma);
     }
 };
-
 function generujKlientow() {
-    const ileIndywidualnych = 1000;
+    const ileIndywidualnych = 1500;
     const ileKlientow = firmy.length + ileIndywidualnych;
     for (var i=0; i<ileKlientow; i++) {
         var klient = {};
@@ -270,7 +258,6 @@ function generujKlientow() {
         klienci.push(klient);
     }
 };
-
 function generujKlientowFirmowych() {
     id = 0;
     firmy.forEach(element => {
@@ -286,7 +273,6 @@ function generujKlientowFirmowych() {
         klienciFirmowi.push(klientFirmowy);
     });
 };
-
 function generujUczestnikowIndywidualnych() { //+ studenci
     var idStudenta = 0;
     for (var i=0; i<klienci.length-firmy.length; i++) {
@@ -314,43 +300,6 @@ function generujUczestnikowIndywidualnych() { //+ studenci
         }
     }
 };
-
-/* function generujRezerwacjeIndywidualne() {
-    var id = 0;
-    for (var i=0; i<uczestnicy.length; i++) { //w tym momencie w uczestnicy są tylko indywidualni
-        var ileRezerwacji = losowaLiczba(0, 10);
-        if (ileRezerwacji > 8) ileRezerwacji = 3;
-        else if (ileRezerwacji > 5) ileRezerwacji = 2;
-        else if (ileRezerwacji > 0) ileRezerwacji = 1;
-        else ileRezerwacji = 0;
-        var losowaKonferencja = losowaLiczba(0, konferencje.length-1);
-        for (var j=0; j<ileRezerwacji; j++) {
-            var rezerwacja = {};
-            id++;
-            rezerwacja.id = id;
-            rezerwacja.idKlienta = i+1+firmy.length;
-            var konferencja = konferencje[losowaKonferencja];
-            losowaKonferencja = (losowaKonferencja + 1) % konferencje.length;
-            rezerwacja.idKonferencji = konferencja.id;
-            var dataRezerwacji = new Date(new Date(konferencja.dataRozpoczecia) - (1000*60*60*24*21+losowaLiczba(0,150)));
-            if (dataRezerwacji.getTime() - (new Date()).getTime() > 0) dataRezerwacji = new Date();
-            dataRezerwacji = dataRezerwacji.getFullYear() + "-" + dataZZerem(dataRezerwacji.getMonth()+1) + "-"
-            + dataZZerem(dataRezerwacji.getDate());
-            rezerwacja.dataRezerwacji = dataRezerwacji;
-            var dataWplaty;
-            if (new Date(dataRezerwacji).getFullYear() == 2018)
-                dataWplaty = "NULL";
-            else {
-                dataWplaty = new Date(new Date(dataRezerwacji) - (-1000*60*60*24*losowaLiczba(1,6)));
-                dataWplaty = dataWplaty.getFullYear() + "-" + dataZZerem(dataWplaty.getMonth()+1) + "-"
-                + dataZZerem(dataWplaty.getDate());
-            }
-            rezerwacja.dataWplaty = dataWplaty;
-            rezerwacje.push(rezerwacja);
-        }
-    }
-}; */
-
 function generujRezerwacje() {
     var id = 0;
     //for (var i=0; i<klienci.length; i++) {
@@ -390,61 +339,6 @@ function generujRezerwacje() {
         }
     });
 };
-
-/* function generujRezerwacjeKonferencjiInywidualne() {
-    var id = 0;
-    rezerwacje.forEach(element => {
-        var idKonferencji = element.idKonferencji;
-        var ileDniTrwa;
-        konferencje.forEach(konf => {
-            if(konf.id == idKonferencji) ileDniTrwa = konf.ileDniTrwa; 
-        });
-        for(var i=0; i<losowaLiczba(1, ileDniTrwa+1); i++) {
-            var rezerwacjaKonferencji = {};
-            id++;
-            rezerwacjaKonferencji.id = id;
-            rezerwacjaKonferencji.idRezerwacji = element.id;
-
-            var liczbaMiejsc;
-            var idDniaKonferencji;
-
-            var licznik = 0
-            for (var j=0; j<dniKonferencji.length; j++) { //zeby bral kolejny dzienKonf, a nie ten sam
-                if (dniKonferencji[j].idKonferencji == idKonferencji) {
-                    if (licznik == i) {
-                        rezerwacjaKonferencji.idDniaKonferencji = dniKonferencji[j].id;
-                        liczbaMiejsc = dniKonferencji[j].liczbaMiejsc;
-                        idDniaKonferencji = dniKonferencji[j].id;
-                        break;
-                    } else licznik++;
-                }
-            }
-            rezerwacjaKonferencji.liczbaMiejsc = 1;
-            var idKlienta = element.idKlienta;
-            var idUczestnika;
-            uczestnicy.forEach(uczest => {
-                if (uczest.idKlienta == idKlienta) idUczestnika = uczest.id;
-            });
-            var jestStudentem = 0;
-            studenci.forEach(stud => {
-                if (stud.idUczestnika == idUczestnika) jestStudentem = 1;
-            });
-            rezerwacjaKonferencji.liczbaStudentow = jestStudentem;
-            rezerwacjaKonferencji.idKlienta = idKlienta;
-            rezerwacjaKonferencji.idUczestnika = idUczestnika; // dla firmy -1 mozna dac
-            rezerwacjaKonferencji.dataWplaty = element.dataWplaty;
-            
-            var ileZajetychMiejsc = 0;
-            rezerwacjeKonferencji.forEach(wczesniejszaRezerwacja => {
-                if (idDniaKonferencji == wczesniejszaRezerwacja.idDniaKonferencji)
-                    ileZajetychMiejsc += wczesniejszaRezerwacja.liczbaMiejsc;
-            });
-            if (ileZajetychMiejsc < liczbaMiejsc) rezerwacjeKonferencji.push(rezerwacjaKonferencji);
-            else console.log("Dla kogoś brakło miejsca na dzien konferencji");
-        }
-    });
-}; */
-
 function generujRezerwacjeKonferencji() { // +uczestnicy i studenci firmowi
     var id = 0;
     rezerwacje.forEach(rezerwacja => {
@@ -501,7 +395,7 @@ function generujRezerwacjeKonferencji() { // +uczestnicy i studenci firmowi
             rezerwacjaKonferencji.liczbaMiejsc = liczbaOsob;
             rezerwacjaKonferencji.liczbaStudentow = liczbaStudentow;
             rezerwacjaKonferencji.idKlienta = rezerwacja.idKlienta;
-            rezerwacjaKonferencji.idUczestnika = idUczestnika; // dla firmy -1 mozna dac
+            rezerwacjaKonferencji.idUczestnika = idUczestnika;
             rezerwacjaKonferencji.dataWplaty = rezerwacja.dataWplaty;
             rezerwacjaKonferencji.klientFirmowy = rezerwacja.klientFirmowy;
             
@@ -512,7 +406,6 @@ function generujRezerwacjeKonferencji() { // +uczestnicy i studenci firmowi
             });
             if (ileZajetychMiejsc < liczbaMiejsc) {
                 //tworzenie studentow i uczestnikow firmowych
-                //trzeba jeszcze dodac info do uczestnikow do ktorych naleza rezerwacji chyba?
                 //flaga zeby to sie zrobilo na raz a nie kazdy dzien
                 if (rezerwacja.klientFirmowy && !uczestnicyFirmowiStworzeni) {
                     uczestnicyFirmowiStworzeni = true;
@@ -557,68 +450,11 @@ function generujRezerwacjeKonferencji() { // +uczestnicy i studenci firmowi
                         }
                     }
                 }
-                
                 rezerwacjeKonferencji.push(rezerwacjaKonferencji);
             }
-            else console.log("Dla kogoś brakło miejsca na dzien konferencji");
         }
     });
 };
-
-/* function generujRezerwacjeWarsztatowIndywidualne() {
-    var id = 0;
-    rezerwacjeKonferencji.forEach(element => {
-        var warsztatyDanegoDnia = [];
-        instancjeWarsztatow.forEach(instancjaWarsztatu => {
-            if (instancjaWarsztatu.idDniaKonferencji == element.idDniaKonferencji)
-                warsztatyDanegoDnia.push(instancjaWarsztatu);
-        });
-
-        var wIluWarsztatachChceWziacUdzial = losowaLiczba(0,warsztatyDanegoDnia.length);
-        for (var i=0; i<wIluWarsztatachChceWziacUdzial; i++) {
-            var rezerwacjaWarsztatu = {};
-            id++;
-            rezerwacjaWarsztatu.id = id;
-            rezerwacjaWarsztatu.idRezerwacjiKonferencji = element.id;
-            rezerwacjaWarsztatu.idInstancjiWarsztatu = warsztatyDanegoDnia[i].id;
-            rezerwacjaWarsztatu.liczbaMiejsc = 1;
-
-            rezerwacjaWarsztatu.idUczestnika = element.idUczestnika; // dla firmy -1 mozna dac
-            rezerwacjaWarsztatu.idKlienta = element.idKlienta;
-            rezerwacjaWarsztatu.dataWplaty = element.dataWplaty;
-            rezerwacjaWarsztatu.idDniaKonferencji = warsztatyDanegoDnia[i].idDniaKonferencji;
-            rezerwacjaWarsztatu.godzinaRozpoczecia = warsztatyDanegoDnia[i].godzinaRozpoczecia;
-            rezerwacjaWarsztatu.godzinaZakonczenia = warsztatyDanegoDnia[i].godzinaZakonczenia;
-
-            //sprawdzenie czy godziny sie nie zazebiaja
-            //warsztatyDanegoDnia - instancjeWarsztatow
-            //wczesniejszeRezerwacje - rezerwacjeWarsztatow
-            godzinyNieKoliduja = true;
-            var gRozp = warsztatyDanegoDnia[i].godzinaRozpoczecia;
-            var gZak = warsztatyDanegoDnia[i].godzinaZakonczenia;
-            rezerwacjeWarsztatow.forEach(wczesniejszaRezerwacja => {
-                if (wczesniejszaRezerwacja.idDniaKonferencji == warsztatyDanegoDnia[i].idDniaKonferencji &&
-                    wczesniejszaRezerwacja.idUczestnika == element.idUczestnika) {
-                        var gRozpWczesniejZarezerwowanych = wczesniejszaRezerwacja.godzinaRozpoczecia;
-                        var gZakWczesniejZarezerwowanych = wczesniejszaRezerwacja.godzinaZakonczenia;
-                        if (!(gRozp > gZakWczesniejZarezerwowanych || gZak < gRozpWczesniejZarezerwowanych))
-                            godzinyNieKoliduja = false;
-                    }
-            });
-            //sprawdzenie czy są miejsca
-            var ileZajetychMiejsc = 0;
-            rezerwacjeWarsztatow.forEach(wczesniejszaRezerwacja => {
-                if (warsztatyDanegoDnia[i].id == wczesniejszaRezerwacja.idInstancjiWarsztatu)
-                    ileZajetychMiejsc += wczesniejszaRezerwacja.liczbaMiejsc;
-            });
-
-            if ((ileZajetychMiejsc < warsztatyDanegoDnia[i].liczbaMiejsc) && godzinyNieKoliduja) 
-                rezerwacjeWarsztatow.push(rezerwacjaWarsztatu);
-            else console.log("Dla kogoś brakło miejsca na warsztat lub godziny kolidowaly");
-        }
-    });
-} */
-
 function generujRezerwacjeWarsztatow() {
     var id = 0;
     rezerwacjeKonferencji.forEach(element => {
@@ -673,7 +509,6 @@ function generujRezerwacjeWarsztatow() {
 
                 if ((ileZajetychMiejsc < warsztatyDanegoDnia[i].liczbaMiejsc) && godzinyNieKoliduja) 
                     rezerwacjeWarsztatow.push(rezerwacjaWarsztatu);
-                else console.log("Dla kogoś brakło miejsca na warsztat lub godziny kolidowaly");
             }
         } else {
             //klient firmowy
@@ -705,27 +540,10 @@ function generujRezerwacjeWarsztatow() {
 
                 if (ileZajetychMiejsc + liczbaMiejsc <= warsztatyDanegoDnia[i].liczbaMiejsc) 
                     rezerwacjeWarsztatow.push(rezerwacjaWarsztatu);
-                else console.log("Dla firmy brakło miejsca na warsztat");
             }
         }
     });
-}
-
-/* function generujRejestracjeKonferencjiInywidualne() {
-    id = 0;
-    rezerwacjeKonferencji.forEach(element => {
-        if (element.dataWplaty != "NULL") {
-            var rejestracjaKonferencji = {};
-            id++;
-            rejestracjaKonferencji.id = id;
-            rejestracjaKonferencji.idRezerwacjiKonferencji = element.id;
-            rejestracjaKonferencji.idUczestnika = element.idUczestnika;
-            //puszowani mają być konkretni uczestnicy (w przypadku firm problem)
-            rejestracjeKonferencji.push(rejestracjaKonferencji);
-        }
-    });
-} */
-
+};
 function generujRejestracjeKonferencji() {
     id = 0;
     rezerwacjeKonferencji.forEach(element => {
@@ -753,23 +571,7 @@ function generujRejestracjeKonferencji() {
             }
         }
     });
-}
-
-/* function generujRejestracjeWarsztatowInywidualne() {
-    id = 0;
-    rezerwacjeWarsztatow.forEach(element => {
-        if (element.dataWplaty != "NULL") {
-            var rejestracjaWarsztatu = {};
-            id++;
-            rejestracjaWarsztatu.id = id;
-            rejestracjaWarsztatu.idRezerwacjiWarsztatu = element.id;
-            rejestracjaWarsztatu.idUczestnika = element.idUczestnika;
-            //puszowani mają być konkretni uczestnicy (w przypadku firm problem) + sprawdzanie godzin dla firm
-            rejestracjeWarsztatow.push(rejestracjaWarsztatu);
-        }
-    });
-} */
-
+};
 function generujRejestracjeWarsztatow() {
     id = 0;
     rezerwacjeWarsztatow.forEach(element => {
@@ -819,105 +621,165 @@ function generujRejestracjeWarsztatow() {
             }
         }
     });
-}
+};
+function generujDane() {
+    while (!daneOk) { 
+        console.log("Generowanie danych...");
+        kraje = [];
+        miejsca = [];
+        konferencje = [];
+        znizki = [];
+        dniKonferencji = [];
+        warsztaty = [];
+        instancjeWarsztatow = [];
+        klienci = [];
+        firmy = [];
+        klienciFirmowi = [];
+        uczestnicy = [];
+        studenci = [];
+        rezerwacje = [];
+        rezerwacjeKonferencji = [];
+        rezerwacjeWarsztatow = [];
+        rejestracjeKonferencji = [];
+        rejestracjeWarsztatow = [];
+        daneOk = true;
+        generujKraje();
+        generujMiejsca();
+        generujKonferencje();
+        generujZnizki();
+        generujDniKonferencji();
+        generujWarsztaty();
+        generujInstancjeWarsztatow();
+        generujFirmy();
+        generujKlientow();
+        generujKlientowFirmowych();
+        generujUczestnikowIndywidualnych();
+        generujRezerwacje();
+        generujRezerwacjeKonferencji();
+        generujRezerwacjeWarsztatow();
+        generujRejestracjeKonferencji();
+        generujRejestracjeWarsztatow();
+    }
+};
 
 //=====================
 
 function stworzKrotke(nazwaTabeli, wartosci) {
     var krotka = "INSERT INTO " + nazwaTabeli + " VALUES (";
     wartosci.forEach(wartosc => {
-        krotka += "\"" + wartosc + "\", ";
+        if (czyLiczba(wartosc) || wartosc == 'NULL')
+            krotka += wartosc + ", ";
+        else
+            krotka += "'" + wartosc + "', ";
     });
     krotka = krotka.substr(0, krotka.length-2);
     krotka += ");\n"
     return krotka;
-}
-
+};
 function tworzenieKwerendKraje() {
     kraje.forEach(kraj => {
-        kwerendy += stworzKrotke("Kraje", [kraj.id, kraj.nazwa, kraj.symbol]);
+        kwerendy += stworzKrotke("Kraje", [kraj.nazwa, kraj.symbol]);
     });
-}
+};
 function tworzenieKwerendMiejsca() {
     miejsca.forEach(miejsce => {
-        kwerendy += stworzKrotke("Miejsca", [miejsce.id, miejsce.idKraju, miejsce.miasto, miejsce.kodPocztowy, miejsce.ulica, miejsce.numerLokalu, miejsce.iloscMiejsc, miejsce.dodatkoweInformacje]);
+        kwerendy += stworzKrotke("Miejsca", [miejsce.idKraju, miejsce.miasto, miejsce.kodPocztowy, miejsce.ulica, miejsce.numerLokalu, miejsce.iloscMiejsc, miejsce.dodatkoweInformacje]);
     });
-}
+};
 function tworzenieKwerendKonferencje() {
     konferencje.forEach(konferencja => {
-        kwerendy += stworzKrotke("Konferencje", [konferencja.id, konferencja.nazwa, konferencja.dataRozpoczecia, konferencja.dataZakonczenia, konferencja.liczbaMiejsc, konferencja.cena, konferencja.znizkaStudencka, konferencja.czyAnulowane]);
+        kwerendy += stworzKrotke("Konferencje", [konferencja.nazwa, konferencja.dataRozpoczecia, konferencja.dataZakonczenia, konferencja.liczbaMiejsc, konferencja.cena, konferencja.znizkaStudencka, konferencja.czyAnulowane]);
     });
-}
+};
 function tworzenieKwerendZnizki() {
     znizki.forEach(znizka => {
-        kwerendy += stworzKrotke("Znizki", [znizka.id, znizka.idKonferencji, znizka.znizka, znizka.doKiedy]);
+        kwerendy += stworzKrotke("Znizki", [znizka.idKonferencji, znizka.znizka, znizka.doKiedy]);
     });
-}
+};
 function tworzenieKwerendDniKonferencji() {
     dniKonferencji.forEach(dzien => {
-        kwerendy += stworzKrotke("Dni_konferencji", [dzien.id, dzien.idKonferencji, dzien.miejsce, dzien.data, dzien.godzinaRozpoczecia, dzien.godzinaZakonczenia]);
+        kwerendy += stworzKrotke("Dni_konferencji", [dzien.idKonferencji, dzien.miejsce, dzien.data, dzien.godzinaRozpoczecia, dzien.godzinaZakonczenia]);
     });
-}
+};
 function tworzenieKwerendWarsztaty() {
     warsztaty.forEach(warsztat => {
-        kwerendy += stworzKrotke("Warsztaty", [warsztat.id, warsztat.nazwa, warsztat.sugerowanaCena, warsztat.opis]);
+        kwerendy += stworzKrotke("Warsztaty", [warsztat.nazwa, warsztat.sugerowanaCena, warsztat.opis]);
     });
-}
+};
 function tworzenieKwerendInstancjeWarsztatow() {
     instancjeWarsztatow.forEach(instancja => {
-        kwerendy += stworzKrotke("Instancje_warsztatow", [instancja.id, instancja.idWarsztatu, instancja.idDniaKonferencji, instancja.miejsce, instancja.cena, instancja.liczbaMiejsc, instancja.godzinaRozpoczecia, instancja.godzinaZakonczenia, instancja.czyAnulowane]);
+        kwerendy += stworzKrotke("Instancje_warsztatow", [instancja.idWarsztatu, instancja.idDniaKonferencji, instancja.miejsce, instancja.cena, instancja.liczbaMiejsc, instancja.godzinaRozpoczecia, instancja.godzinaZakonczenia, instancja.czyAnulowane]);
     });
-}
+};
 function tworzenieKwerendKlienci() {
     klienci.forEach(klient => {
-        kwerendy += stworzKrotke("Klienci", [klient.id, klient.login, klient.haslo, klient.email]);
+        kwerendy += stworzKrotke("Klienci", [klient.login, klient.haslo, klient.email]);
     });
-}
+};
 function tworzenieKwerendFirmy() {
     firmy.forEach(firma => {
-        kwerendy += stworzKrotke("Firmy", [firma.id, firma.idKraju, firma.nazwa, firma.nip]);
+        kwerendy += stworzKrotke("Firmy", [firma.idKraju, firma.nazwa, firma.nip]);
     });
-}
+};
 function tworzenieKwerendKlienciFirmowi() {
     klienciFirmowi.forEach(klient => {
-        kwerendy += stworzKrotke("Klienci_Firmowi", [klient.id, klient.idKlienta, klient.idFirmy, klient.imiePrzedstawiciela, klient.nazwiskoPrzedstawiciela, klient.telefon]);
+        kwerendy += stworzKrotke("Klienci_Firmowi", [klient.idKlienta, klient.idFirmy, klient.imiePrzedstawiciela, klient.nazwiskoPrzedstawiciela, klient.telefon]);
     });
-}
+};
 function tworzenieKwerendUczestnicy() {
     uczestnicy.forEach(uczestnik => {
-        kwerendy += stworzKrotke("Uczestnicy", [uczestnik.id, uczestnik.idKlienta, uczestnik.imie, uczestnik.nazwisko, uczestnik.telefon, uczestnik.email]);
+        kwerendy += stworzKrotke("Uczestnicy", [uczestnik.idKlienta, uczestnik.imie, uczestnik.nazwisko, uczestnik.telefon, uczestnik.email]);
     });
-}
+};
 function tworzenieKwerendStudenci() {
     studenci.forEach(student => {
-        kwerendy += stworzKrotke("Studenci", [student.id, student.idUczestnika, student.numerLegitymacji]);
+        kwerendy += stworzKrotke("Studenci", [student.idUczestnika, student.numerLegitymacji]);
     });
-}
+};
 function tworzenieKwerendRezerwacje() {
     rezerwacje.forEach(rezerwacja => {
-        kwerendy += stworzKrotke("Rezerwacje", [rezerwacja.id, rezerwacja.idKlienta, rezerwacja.dataRezerwacji, rezerwacja.dataWplaty]);
+        kwerendy += stworzKrotke("Rezerwacje", [rezerwacja.idKlienta, rezerwacja.dataRezerwacji, rezerwacja.dataWplaty]);
     });
-}
+};
 function tworzenieKwerendRezerwacjeKonferencji() {
     rezerwacjeKonferencji.forEach(rezerwacja => {
-        kwerendy += stworzKrotke("Rezerwacje_konferencji", [rezerwacja.id, rezerwacja.idRezerwacji, rezerwacja.idDniaKonferencji, rezerwacja.liczbaMiejsc, rezerwacja.liczbaStudentow]);
+        kwerendy += stworzKrotke("Rezerwacje_konferencji", [rezerwacja.idRezerwacji, rezerwacja.idDniaKonferencji, rezerwacja.liczbaMiejsc, rezerwacja.liczbaStudentow]);
     });
-}
+};
 function tworzenieKwerendRezerwacjeWarsztatow() {
     rezerwacjeWarsztatow.forEach(rezerwacja => {
-        kwerendy += stworzKrotke("Rezerwacje_warsztatow", [rezerwacja.id, rezerwacja.idRezerwacjiKonferencji, rezerwacja.idInstancjiWarsztatu, rezerwacja.liczbaMiejsc]);
+        kwerendy += stworzKrotke("Rezerwacje_warsztatow", [rezerwacja.idRezerwacjiKonferencji, rezerwacja.idInstancjiWarsztatu, rezerwacja.liczbaMiejsc]);
     });
-}
+};
 function tworzenieKwerendRejestracjeKonferencji() {
     rejestracjeKonferencji.forEach(rejestracja => {
-        kwerendy += stworzKrotke("Rejestracje_konferencji", [rejestracja.id, rejestracja.idRezerwacjiKonferencji, rejestracja.idUczestnika]);
+        kwerendy += stworzKrotke("Rejestracje_konferencji", [rejestracja.idRezerwacjiKonferencji, rejestracja.idUczestnika]);
     });
-}
+};
 function tworzenieKwerendRejestracjeWarsztatow() {
     rejestracjeWarsztatow.forEach(rejestracja => {
-        kwerendy += stworzKrotke("Rejestracje_warsztatow", [rejestracja.id, rejestracja.idRezerwacjiWarsztatu, rejestracja.idUczestnika]);
+        kwerendy += stworzKrotke("Rejestracje_warsztatow", [rejestracja.idRezerwacjiWarsztatu, rejestracja.idUczestnika]);
     });
-}
+};
+function generujKwerendy() {
+    tworzenieKwerendKraje();
+    tworzenieKwerendMiejsca();
+    tworzenieKwerendKonferencje();
+    tworzenieKwerendZnizki();
+    tworzenieKwerendDniKonferencji();
+    tworzenieKwerendWarsztaty();
+    tworzenieKwerendInstancjeWarsztatow();
+    tworzenieKwerendKlienci();
+    tworzenieKwerendFirmy();
+    tworzenieKwerendKlienciFirmowi();
+    tworzenieKwerendUczestnicy();
+    tworzenieKwerendStudenci();
+    tworzenieKwerendRezerwacje();
+    tworzenieKwerendRezerwacjeKonferencji();
+    tworzenieKwerendRezerwacjeWarsztatow();
+    tworzenieKwerendRejestracjeKonferencji();
+    tworzenieKwerendRejestracjeWarsztatow();
+};
 
 //=====================
 
@@ -939,49 +801,11 @@ rezerwacjeWarsztatow = [];
 rejestracjeKonferencji = [];
 rejestracjeWarsztatow = [];
 kwerendy = "";
-generujKraje();
-generujMiejsca();
-generujKonferencje();
-generujZnizki();
-generujDniKonferencji();
-generujWarsztaty();
-generujInstancjeWarsztatow();
-generujFirmy();
-generujKlientow();
-generujKlientowFirmowych();
-generujUczestnikowIndywidualnych();
-//generujRezerwacjeIndywidualne();
-generujRezerwacje();
-//generujRezerwacjeKonferencjiInywidualne();
-generujRezerwacjeKonferencji();
-//generujRezerwacjeWarsztatowIndywidualne();
-generujRezerwacjeWarsztatow();
-//generujRejestracjeKonferencjiInywidualne();
-generujRejestracjeKonferencji();
-//generujRejestracjeWarsztatowInywidualne();
-generujRejestracjeWarsztatow();
+var daneOk = false;
+generujDane();
+generujKwerendy();
 
-tworzenieKwerendKraje();
-tworzenieKwerendMiejsca();
-tworzenieKwerendKonferencje();
-tworzenieKwerendZnizki();
-tworzenieKwerendDniKonferencji();
-tworzenieKwerendWarsztaty(); //lamanie lin do poprawy
-tworzenieKwerendInstancjeWarsztatow();
-tworzenieKwerendKlienci();
-tworzenieKwerendFirmy();
-tworzenieKwerendKlienciFirmowi();
-tworzenieKwerendUczestnicy();
-tworzenieKwerendStudenci();
-tworzenieKwerendRezerwacje();
-tworzenieKwerendRezerwacjeKonferencji();
-tworzenieKwerendRezerwacjeWarsztatow();
-tworzenieKwerendRejestracjeKonferencji();
-tworzenieKwerendRejestracjeWarsztatow();
-
-//console.log("=====================================================");
-//console.log(rejestracjeKonferencji); 
-//console.log("=====================================================");
-//console.log(kwerendy);
-
-fs.writeFile("dane-z-generatora.txt", kwerendy);
+fs.writeFile("dane-z-generatora.txt", kwerendy, function (err) {
+    if (err) throw err;
+    console.log('Zapisano dane do pliku.');
+});
